@@ -36,6 +36,8 @@ If a decision is blocked, ask one targeted question. Never ask for a password or
 
 Explain the network, privilege, ownership, and billing implications before an authorized setup. Broad reachability still requires TLS and authentication, but the generated user is not least privilege. The integration does not restrict network access. If its defaults violate the owner's policy, say so and offer a manually connected cluster as the alternative. Do not imply the integration can be locked down. After setup, check the actual resources and environment bindings, since documented defaults do not prove current state. Do not remove managed access entries, revoke managed roles, or disconnect shared resources without checking dependencies and getting the owner's approval.
 
+**Installing the integration with the Vercel CLI.** When the user wants an agent to set up the Marketplace integration and has authorized provisioning, the Vercel CLI is the most direct path (`vercel integration add`, alias `vercel install`). It installs the same native integration, so the defaults above apply. Read [references/vercel-cli-integration.md](references/vercel-cli-integration.md) for the commands, and follow its plan-first sequence: look up the integration, show the exact commands and what needs approval, then run only after approval. Without authorization or CLI access, give the dashboard steps instead.
+
 **New setup.** Explain resource, region, billing, and database-user choices first. Get explicit authorization for billable or security-sensitive changes. If you lack the tools or permissions, give exact manual steps and mark them as not executed.
 
 ## 3. Configure networking deliberately
@@ -62,13 +64,13 @@ If credentials were exposed, flag it and recommend rotation through the owner's 
 
 ## 5. Implement the minimal server connection
 
-Use the canonical helper in the `mongodb-connection` skill (`references/client-helper.md`) as the default `lib/mongodb.ts`. If that skill is not installed, write a helper with the same properties: it shares the first connection across concurrent requests, recovers after a failed connect, and avoids touching Atlas or reading the URI at import time. Key rules:
+Use the `mongodb-connection` skill's `references/vercel-client-lifecycle.md` for the server-side client (`lib/mongodb.ts`). If that skill is not installed, write a helper with the same properties: it shares the first connection across concurrent requests, recovers after a failed connect, and avoids touching Atlas or reading the URI at import time. Key rules:
 
 - Run routes that use the native driver on the Node.js runtime (`export const runtime = "nodejs"` in Next.js). The driver does not run on Edge.
 - Use one server-only helper per connection configuration, imported by every handler. Never close the shared client in a request handler.
 - Keep driver defaults for pool size and timeouts on a first deployment.
 - With an ODM, keep its own connection lifecycle.
-- A basic deployment does not need `@vercel/functions`. Mention `attachDatabasePool` only when the user is on Fluid compute and asks about connection release or suspension; otherwise leave it out entirely. If it applies, hand off to the `mongodb-connection` skill (`references/fluid-compute.md`).
+- A basic deployment does not need `@vercel/functions`. Mention `attachDatabasePool` only when the user is on Fluid compute and asks about connection release or suspension; otherwise leave it out entirely. If it applies, hand off to the `mongodb-connection` skill (`references/vercel-fluid-compute.md`).
 
 For connection spikes, pool waits, or tuning, use the `mongodb-connection` skill if it is installed. Do not install other skills or dependencies silently.
 

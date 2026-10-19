@@ -14,7 +14,11 @@
       "expected_skill": "mongodb-vercel-deployment",
       "should_not_trigger": "mongodb-connection",
       "reasoning": "Works locally but fails on Vercel is a network access and environment scope problem, not a pool problem",
-      "trigger_keywords": ["vercel", "preview", "server selection timeout"],
+      "trigger_keywords": [
+        "vercel",
+        "preview",
+        "server selection timeout"
+      ],
       "ambiguity_level": "low"
     },
     {
@@ -24,7 +28,11 @@
       "expected_skill": "mongodb-vercel-deployment",
       "should_not_trigger": "mongodb-connection",
       "reasoning": "Marketplace integration defaults, network access and environment bindings belong to the deployment workflow",
-      "trigger_keywords": ["vercel", "marketplace", "integration"],
+      "trigger_keywords": [
+        "vercel",
+        "marketplace",
+        "integration"
+      ],
       "ambiguity_level": "low"
     },
     {
@@ -34,7 +42,11 @@
       "expected_skill": "mongodb-connection",
       "should_not_trigger": "mongodb-vercel-deployment",
       "reasoning": "Per-request client creation is a client lifecycle problem",
-      "trigger_keywords": ["MongoClient", "connections spike", "every request"],
+      "trigger_keywords": [
+        "MongoClient",
+        "connections spike",
+        "every request"
+      ],
       "ambiguity_level": "low"
     },
     {
@@ -44,7 +56,11 @@
       "expected_skill": "mongodb-connection",
       "should_not_trigger": "mongodb-vercel-deployment",
       "reasoning": "attachDatabasePool and idle connection release are connection lifecycle topics",
-      "trigger_keywords": ["attachDatabasePool", "Fluid compute", "MongoClient"],
+      "trigger_keywords": [
+        "attachDatabasePool",
+        "Fluid compute",
+        "MongoClient"
+      ],
       "ambiguity_level": "low"
     },
     {
@@ -54,7 +70,11 @@
       "expected_skill": "mongodb-vercel-deployment",
       "acceptable_alternative": "mongodb-connection",
       "reasoning": "Fresh setup on Vercel is a deployment task, but the helper it produces is the connection skill's canonical pattern",
-      "trigger_keywords": ["new", "vercel", "lib/mongodb.ts"],
+      "trigger_keywords": [
+        "new",
+        "vercel",
+        "lib/mongodb.ts"
+      ],
       "ambiguity_level": "high"
     },
     {
@@ -64,7 +84,10 @@
       "expected_skill": "mongodb-schema-design",
       "should_not_trigger": "mongodb-vercel-deployment",
       "reasoning": "Schema design is out of scope for the deployment skill even though Vercel is mentioned",
-      "trigger_keywords": ["schema", "multi-tenant"],
+      "trigger_keywords": [
+        "schema",
+        "multi-tenant"
+      ],
       "ambiguity_level": "low"
     },
     {
@@ -74,7 +97,25 @@
       "expected_skill": "mongodb-natural-language-querying",
       "should_not_trigger": "mongodb-connection",
       "reasoning": "An aggregation request with no client or connection context must not trigger the connection skill",
-      "trigger_keywords": ["aggregation", "pipeline", "group"],
+      "trigger_keywords": [
+        "aggregation",
+        "pipeline",
+        "group"
+      ],
+      "ambiguity_level": "low"
+    },
+    {
+      "id": 8,
+      "category": "clear_vercel_deployment",
+      "prompt": "Use the Vercel CLI to install the MongoDB Atlas integration for our linked project. Plan only, show me the commands.",
+      "expected_skill": "mongodb-vercel-deployment",
+      "should_not_trigger": "mongodb-connection",
+      "reasoning": "Installing the Marketplace integration with the Vercel CLI is a deployment setup task",
+      "trigger_keywords": [
+        "vercel cli",
+        "integration",
+        "install"
+      ],
       "ambiguity_level": "low"
     }
   ]

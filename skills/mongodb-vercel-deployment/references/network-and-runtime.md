@@ -28,7 +28,7 @@ Documentation reviewed October 12, 2026. Check current plan capabilities and the
   - Build-traffic routing is a separate setting. Check whether it is enabled for the project.
 - **Access lists:** Atlas IP access lists are project network controls, not a substitute for database-user permissions. Removing an entry may not end existing connections.
 - **Runtime:** the native Node.js driver needs a Node.js runtime. Edge routes that import it may build, then fail at request time.
-- **`attachDatabasePool`** (Fluid compute only) accepts the `MongoClient` and needs a non-zero `maxIdleTimeMS` to release idle connections. Details are in the `mongodb-connection` skill's `references/fluid-compute.md`.
+- **`attachDatabasePool`** (Fluid compute only) accepts the `MongoClient` and needs a non-zero `maxIdleTimeMS` to release idle connections. Details are in the `mongodb-connection` skill's `references/vercel-fluid-compute.md`.
 
 ## Sources
 
